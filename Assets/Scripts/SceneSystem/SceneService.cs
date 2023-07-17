@@ -62,19 +62,33 @@ namespace Assets.Scripts.SceneSystem
             
         }
 
-        public void ReloadCurrentLevel()
-        {
-            _cachedString = SceneManager.GetActiveScene().name;
-            StartCoroutine(LoadSceneAsync(_cachedString, LoadSceneMode.Additive));
-        }
-
-        public IEnumerator LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode)
+        private IEnumerator AppearLoadingPanel()
         {
             if (!isLoadingPanelVisible())
             {
                 LoadingPanelAppearRequested?.Invoke();
                 yield return _waitForLoadingPanelAppear;
             }
+        }
+
+        private IEnumerator DisappearLoadingPanel()
+        {
+            if (isLoadingPanelVisible())
+            {
+                LoadingPanelDisappearRequested?.Invoke();
+                yield return _waitForLoadingPanelAppear;
+            }
+        }
+
+        public void ReloadCurrentLevel()
+        {
+            _cachedString = SceneManager.GetActiveScene().name;
+            StartCoroutine(LoadSceneAsync(_cachedString, LoadSceneMode.Additive));
+        }
+
+        private IEnumerator LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode)
+        {
+            yield return AppearLoadingPanel();
 
             Scene activeScene = SceneManager.GetActiveScene();
             if (loadSceneMode == LoadSceneMode.Additive && activeScene.name.Equals(sceneName))
@@ -85,7 +99,7 @@ namespace Assets.Scripts.SceneSystem
 
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
 
-            while (!loadOperation.isDone)
+            while (isLoadingPanelVisible() && !loadOperation.isDone)
             {
                 LoadingPanelProgressBarUpdateRequested?.Invoke(0.33f + loadOperation.progress / 3f);
                 yield return null;
@@ -101,7 +115,7 @@ namespace Assets.Scripts.SceneSystem
             LoadingPanelDisappearRequested?.Invoke();
         }
 
-        public IEnumerator UnloadSceneAsync(string sceneName, UnloadSceneOptions unloadSceneOptions)
+        private IEnumerator UnloadSceneAsync(string sceneName, UnloadSceneOptions unloadSceneOptions)
         {
             if (!isLoadingPanelVisible())
             {
@@ -118,10 +132,12 @@ namespace Assets.Scripts.SceneSystem
             }
         }
 
-        public IEnumerator UnloadAndLoadScene(string unloadSceneName, UnloadSceneOptions unloadSceneOptions, string loadSceneName, LoadSceneMode loadSceneMode)
+        private IEnumerator UnloadAndLoadScene(string unloadSceneName, UnloadSceneOptions unloadSceneOptions, string loadSceneName, LoadSceneMode loadSceneMode)
         {
+            yield return StartCoroutine(AppearLoadingPanel());
             yield return StartCoroutine(UnloadSceneAsync(unloadSceneName, unloadSceneOptions));
             yield return StartCoroutine(LoadSceneAsync(loadSceneName, loadSceneMode));
+            yield return StartCoroutine(DisappearLoadingPanel());
         }
 
         public void OnLevelLoadRequested(LevelData levelData, LoadSceneMode loadSceneMode)
