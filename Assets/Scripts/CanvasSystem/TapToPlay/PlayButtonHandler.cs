@@ -47,6 +47,7 @@ namespace Assets.Scripts.CanvasSystem
             _playButton.onClick.AddListener(OnPlayButtonClicked);
 
             ActivatePlayTextAnimation();
+            gameObject.SetActive(true);
         }
 
         private void Terminate()

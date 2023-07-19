@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2383241222745850899
+--- !u!1 &7061249108370939326
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2383241222745850894}
-  - component: {fileID: 2383241222745850893}
-  - component: {fileID: 2383241222745850892}
+  - component: {fileID: 7061249108370939329}
+  - component: {fileID: 7061249108370939328}
+  - component: {fileID: 7061249108370939327}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: CarManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2383241222745850894
+--- !u!4 &7061249108370939329
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2383241222745850899}
+  m_GameObject: {fileID: 7061249108370939326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,32 +33,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2383241222745850893
+--- !u!114 &7061249108370939328
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2383241222745850899}
+  m_GameObject: {fileID: 7061249108370939326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc5616514d179d94894feee2e0c7ae88, type: 3}
+  m_Script: {fileID: 11500000, guid: b408d8cbabcd6334097bfe3baa17e121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameStateList:
-  - {fileID: 11400000, guid: c390e7b88277ffa4eb0004a82d677aee, type: 2}
-  - {fileID: 11400000, guid: d8c1394333d309f40bf2798cf42a5880, type: 2}
-  - {fileID: 11400000, guid: 4d92467d59f8ca542b4c4f18276bd062, type: 2}
-  - {fileID: 11400000, guid: ec92cd5f31be6194c9455b329dda9f2c, type: 2}
---- !u!114 &2383241222745850892
+  _settings: {fileID: 11400000, guid: 802b53e965fedd044b26b15b5f1720b8, type: 2}
+  _carHandlerPrefab: {fileID: 1759504661128459322, guid: 99d31d1641e87b44ba74fee99db1f864, type: 3}
+--- !u!114 &7061249108370939327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2383241222745850899}
+  m_GameObject: {fileID: 7061249108370939326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 163361f02e46daa4ca288a631653efea, type: 3}
+  m_Script: {fileID: 11500000, guid: d809f634ad346f042949b04452930402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

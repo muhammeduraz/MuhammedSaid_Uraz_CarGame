@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94dcf09fd5616d24e813d6029a60514e, type: 3}
-  m_Name: LoseGameState
+  m_Script: {fileID: 11500000, guid: 1446c5dda98d1d84486b54163de1aef0, type: 3}
+  m_Name: CarManagerSettings
   m_EditorClassIdentifier: 
-  gameStateType: 3
+  _carCount: 8

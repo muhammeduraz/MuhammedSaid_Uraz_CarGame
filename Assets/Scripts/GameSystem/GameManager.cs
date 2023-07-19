@@ -8,11 +8,6 @@ namespace Assets.Scripts.GameSystem
     [DefaultExecutionOrder(-6000)]
     public class GameManager : MonoBehaviour, IDisposable
     {
-        public enum test
-        {
-            aw,
-            ae
-        }
         #region Events
 
         public Action SceneReloadRequested;
@@ -26,7 +21,7 @@ namespace Assets.Scripts.GameSystem
         [SerializeField] private List<BaseGameState> _gameStateList;
 
         #endregion Variables
-        public test tsest;
+
         #region Properties
 
         public Action<GameStateType> GameStateChanged { get => _gameStateHandler.GameStateChanged; set => _gameStateHandler.GameStateChanged = value; }
@@ -64,14 +59,14 @@ namespace Assets.Scripts.GameSystem
             _gameStateHandler.ChangeGameState(gameStateType);
         }
 
-        public void OnInitialSpawnCompleted()
+        public void OnPlayButtonClicked()
         {
             ChangeGameState(GameStateType.Play);
         }
 
-        public void OnPlayButtonClicked()
+        public void OnAllCarsCompleted()
         {
-            ChangeGameState(GameStateType.Play);
+            ChangeGameState(GameStateType.Win);
         }
 
         private void ReloadScene()

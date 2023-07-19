@@ -6,6 +6,13 @@ namespace Assets.Scripts.CarSystem
 {
     public class CarHandler : MonoBehaviour, IInitializable, IDisposable
     {
+        #region Events
+
+        public Action CarHitAnObstacle;
+        public Action CarCompletedPath;
+
+        #endregion Events
+        
         #region Variables
 
         private bool _isMovementActive;
@@ -13,6 +20,7 @@ namespace Assets.Scripts.CarSystem
         private float _currentRotation;
 
         [SerializeField] private CarSettings _settings;
+        [SerializeField] private CarPathData _pathData;
 
         [SerializeField] private Rigidbody2D _rigidbody;
 
@@ -20,7 +28,9 @@ namespace Assets.Scripts.CarSystem
 
         #region Properties
 
+        public bool IsMovementActive { get => _isMovementActive; set { _isMovementActive = value; enabled = value; } }
 
+        public CarPathData PathData { get => _pathData; }
 
         #endregion Properties
 
@@ -33,18 +43,7 @@ namespace Assets.Scripts.CarSystem
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                _isMovementActive = !_isMovementActive;
-                _rigidbody.simulated = _isMovementActive;
-            }
-
-            if (!_isMovementActive) return;
-
-            _currentRotation += Input.GetAxis("Horizontal") * _settings.RotationSpeed * -10f * Time.deltaTime;
-
-            _rigidbody.velocity = transform.up * _settings.MovementSpeed;
-            _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _currentRotation, _settings.RotationLerpSpeed * Time.deltaTime);
+            Move();
         }
 
         private void OnDestroy()
@@ -59,12 +58,45 @@ namespace Assets.Scripts.CarSystem
         public void Initialize()
         {
             _currentRotation = _rigidbody.rotation;
+
+            SetPositionToStartPosition();
+            StopMovement();
         }
 
         public void Dispose()
         {
             _settings = null;
+            _pathData = null;
             _rigidbody = null;
+        }
+
+        public void StartMovement()
+        {
+            IsMovementActive = true;
+            _rigidbody.simulated = true;
+        }
+
+        public void StopMovement()
+        {
+            IsMovementActive = false;
+
+            _rigidbody.simulated = false;
+            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.angularVelocity = 0f;
+        }
+
+        public void SetPositionToStartPosition()
+        {
+            _rigidbody.position = _pathData.StartPosition;
+            _rigidbody.rotation = _pathData.StartRotation;
+        }
+
+        private void Move()
+        {
+            _currentRotation += Input.GetAxis("Horizontal") * _settings.RotationSpeed * -10f * Time.deltaTime;
+
+            _rigidbody.velocity = transform.up * _settings.MovementSpeed;
+            _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _currentRotation, _settings.RotationLerpSpeed * Time.deltaTime);
         }
 
         #endregion Functions
