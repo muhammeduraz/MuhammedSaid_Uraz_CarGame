@@ -1,13 +1,12 @@
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.GameSystem.States
 {
-    public class BasePlayerState : ScriptableObject, IGameState, IInitializable, IDisposable
+    public class BaseGameState : ScriptableObject, IGameState
     {
         #region Variables
 
-
+        public GameStateType gameStateType;
 
         #endregion Variables
 
@@ -24,11 +23,6 @@ namespace Assets.Scripts.GameSystem.States
         }
 
         public virtual void OnStateExit()
-        {
-
-        }
-
-        public virtual void Dispose()
         {
 
         }

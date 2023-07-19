@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameSystem.States
 {
-    [CreateAssetMenu(fileName = "WaitGameState", menuName = "Scriptable Objects/States/GameStates/WaitGameState")]
-    public class WaitGameState : BasePlayerState
+    [CreateAssetMenu(fileName = "StartGameState", menuName = "Scriptable Objects/Game/States/StartGameState")]
+    public class StartGameState : BaseGameState
     {
         #region Functions
 
@@ -20,11 +20,6 @@ namespace Assets.Scripts.GameSystem.States
         public override void OnStateExit()
         {
             base.OnStateExit();
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
         }
 
         #endregion Functions

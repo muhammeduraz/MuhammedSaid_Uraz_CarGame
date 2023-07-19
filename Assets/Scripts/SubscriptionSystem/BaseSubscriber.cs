@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.SubscribeSystem
@@ -10,12 +12,12 @@ namespace Assets.Scripts.SubscribeSystem
         private void Awake()
         {
             Initialize();
-            SubscribeEvents();
+            SafeSubscribeEvents();
         }
 
         private void OnDestroy()
         {
-            UnSubscribeEvents();
+            SafeUnSubscribeEvents();
             Dispose();
         }
 
@@ -28,6 +30,29 @@ namespace Assets.Scripts.SubscribeSystem
 
         protected abstract void SubscribeEvents();
         protected abstract void UnSubscribeEvents();
+
+        private void SafeSubscribeEvents()
+        {
+            try
+            {
+                SubscribeEvents();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"{this}: {exception.Message}: {exception.HelpLink}");
+            }        
+        }
+        private void SafeUnSubscribeEvents()
+        {
+            try
+            {
+                UnSubscribeEvents();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"{this}: {exception.Message}: {exception.HelpLink}");
+            }
+        }
 
         #endregion Functions
     }

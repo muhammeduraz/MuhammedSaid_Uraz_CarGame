@@ -9,6 +9,12 @@ namespace Assets.Scripts.CanvasSystem
 {
     public class PlayButtonHandler : MonoBehaviour, IInitializable, IDisposable
     {
+        #region Events
+
+        public Action PlayButtonClicked;
+
+        #endregion Events
+        
         #region Variables
 
         private Sequence _textSequence;
@@ -35,11 +41,6 @@ namespace Assets.Scripts.CanvasSystem
 
         #region Functions
 
-        public void PlayButtonHandlerConstruct()
-        {
-            
-        }
-
         public void Initialize()
         {
             _playButton.onClick.RemoveAllListeners();
@@ -51,18 +52,26 @@ namespace Assets.Scripts.CanvasSystem
         private void Terminate()
         {
             _playButton.onClick.RemoveAllListeners();
-
             DeactivatePlayTextAnimation();
+
+            gameObject.SetActive(false);
         }
 
         public void Dispose()
         {
+            _playButton.onClick.RemoveAllListeners();
             _playButton = null;
+
+            _textSequence?.Kill();
+            _textSequence = null;
+
+            _playText = null;
         }
 
         private void OnPlayButtonClicked()
         {
-            gameObject.SetActive(false);
+            Terminate();
+            PlayButtonClicked?.Invoke();
         }
 
         private void ActivatePlayTextAnimation()

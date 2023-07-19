@@ -3,26 +3,32 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.GameSystem.States
 {
-    public class PlayerStateHandler : IInitializable, IDisposable
+    public class GameStateHandler : IDisposable
     {
+        #region Events
+
+        public Action<GameStateType> GameStateChanged;
+
+        #endregion Events
+
         #region Variables
 
-        private BasePlayerState _currentGameState;
+        private BaseGameState _currentGameState;
 
-        private List<BasePlayerState> _gameStateList;
+        private readonly List<BaseGameState> _gameStateList;
 
         #endregion Variables
 
         #region Functions
 
-        public PlayerStateHandler(List<BasePlayerState> gameStateList)
+        public GameStateHandler(List<BaseGameState> gameStateList)
         {
             _gameStateList = gameStateList;
         }
 
         public void Initialize()
         {
-            BasePlayerState gameState = null;
+            BaseGameState gameState = null;
 
             for (int i = 0; i < _gameStateList.Count; i++)
             {
@@ -38,26 +44,20 @@ namespace Assets.Scripts.GameSystem.States
         public void Dispose()
         {
             _currentGameState = null;
-            BasePlayerState gameState = null;
-
-            for (int i = 0; i < _gameStateList.Count; i++)
-            {
-                gameState = _gameStateList[i];
-
-                if (gameState != null)
-                {
-                    gameState.Dispose();
-                }
-            }
         }
 
-        public void ChangeGameState(Type type)
+        public void ChangeGameState(GameStateType gameStateType)
         {
+            if (_currentGameState && gameStateType == _currentGameState.gameStateType)
+                return;
+
             DeactivateCurrentGameState();
 
-            _currentGameState = GetGameStateByType(type);
+            _currentGameState = GetGameStateByStateType(gameStateType);
 
             ActivateCurrentGameState();
+
+            GameStateChanged?.Invoke(gameStateType);
         }
 
         private void ActivateCurrentGameState()
@@ -76,15 +76,15 @@ namespace Assets.Scripts.GameSystem.States
             }
         }
 
-        private BasePlayerState GetGameStateByType(Type type)
+        private BaseGameState GetGameStateByStateType(GameStateType gameStateType)
         {
-            BasePlayerState gameState = null;
+            BaseGameState gameState = null;
 
             for (int i = 0; i < _gameStateList.Count; i++)
             {
                 gameState = _gameStateList[i];
 
-                if (gameState != null && gameState.GetType() == type)
+                if (gameState != null && gameState.gameStateType == gameStateType)
                 {
                     return gameState;
                 }

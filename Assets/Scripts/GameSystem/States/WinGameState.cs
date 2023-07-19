@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameSystem.States
 {
-    [CreateAssetMenu(fileName = "PlayGameState", menuName = "Scriptable Objects/Game/States/PlayGameState")]
-    public class PlayGameState : BaseGameState
+    [CreateAssetMenu(fileName = "WinGameState", menuName = "Scriptable Objects/Game/States/WinGameState")]
+    public class WinGameState : BaseGameState
     {
         #region Functions
 
