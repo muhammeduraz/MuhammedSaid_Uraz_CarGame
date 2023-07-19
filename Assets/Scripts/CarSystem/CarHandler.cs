@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Assets.Scripts.CarSystem.Data;
+using Assets.Scripts.ObstacleSystem;
 
 namespace Assets.Scripts.CarSystem
 {
@@ -12,8 +13,10 @@ namespace Assets.Scripts.CarSystem
         public Action CarCompletedPath;
 
         #endregion Events
-        
-        #region Variables
+
+        #region 
+
+        private const float DegreeToRadian = Mathf.PI / 180f;
 
         private bool _isMovementActive;
 
@@ -87,8 +90,8 @@ namespace Assets.Scripts.CarSystem
 
         public void SetPositionToStartPosition()
         {
-            _rigidbody.position = _pathData.StartPosition;
-            _rigidbody.rotation = _pathData.StartRotation;
+            transform.position = _pathData.StartPosition;
+            transform.rotation = new Quaternion(0f, 0f, Mathf.Sin(_pathData.StartRotation * DegreeToRadian), Mathf.Cos(_pathData.StartRotation * DegreeToRadian));
         }
 
         private void Move()
@@ -99,6 +102,25 @@ namespace Assets.Scripts.CarSystem
             _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _currentRotation, _settings.RotationLerpSpeed * Time.deltaTime);
         }
 
+        private void OnHitAnObstacle()
+        {
+            CarHitAnObstacle?.Invoke();
+        }
+
         #endregion Functions
+
+        #region Trigger Functions
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            collider.TryGetComponent(out IObstacle obstacle);
+
+            if (obstacle == null) return;
+
+            obstacle.OnObstacleHit();
+            OnHitAnObstacle();
+        }
+
+        #endregion Trigger Functions
     }
 }

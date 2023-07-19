@@ -31,7 +31,7 @@ namespace Assets.Scripts.CanvasSystem
             Initialize();
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             Terminate();
             Dispose();
