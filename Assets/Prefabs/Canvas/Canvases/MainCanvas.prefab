@@ -164,6 +164,10 @@ PrefabInstance:
       value: MainCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 8132994673215648976, guid: 9bd05a7ac3c1a3e448c560beac120af7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132994673215648976, guid: 9bd05a7ac3c1a3e448c560beac120af7, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}

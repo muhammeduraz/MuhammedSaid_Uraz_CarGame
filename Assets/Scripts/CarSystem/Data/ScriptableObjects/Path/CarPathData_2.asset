@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee94ab57adff2bf49baf6a2db9601612, type: 3}
-  m_Name: CarLevelData
+  m_Script: {fileID: 11500000, guid: 2fac87ba8db75a34989ba6d65022b50c, type: 3}
+  m_Name: CarPathData_2
   m_EditorClassIdentifier: 
-  _carPathDataList: []
+  _startRotation: 180
+  _startPosition: {x: 4, y: 5}
+  _finishPosition: {x: -4, y: -5}

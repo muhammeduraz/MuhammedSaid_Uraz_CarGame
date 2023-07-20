@@ -3,18 +3,18 @@ using UnityEngine;
 
 namespace Assets.Scripts.SaveSystem
 {
-    public class SaveService
+    public static class SaveService
     {
         #region Variables
 
-        private string _cachedString = string.Empty;
         private const string DebugPrefix = "SaveService";
+        private static string _cachedString = string.Empty;
 
         #endregion Variables
 
         #region Functions
 
-        public void Save<T>(string key, T value)
+        public static void Save<T>(string key, T value)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -35,7 +35,7 @@ namespace Assets.Scripts.SaveSystem
             _cachedString = string.Empty;
         }
 
-        public T Load<T>(string key, T defaultValue = default)
+        public static T Load<T>(string key, T defaultValue = default)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -64,12 +64,12 @@ namespace Assets.Scripts.SaveSystem
             }
         }
 
-        public bool HasSave<T>(string key)
+        public static bool HasSave<T>(string key)
         {
             return !string.IsNullOrEmpty(key) && PlayerPrefs.HasKey(key);
         }
 
-        public void Delete<T>(string key)
+        public static void Delete<T>(string key)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -87,7 +87,7 @@ namespace Assets.Scripts.SaveSystem
             SendLog($"Key deleted successfully: {key}");
         }
 
-        public void DeleteSave()
+        public static void DeleteSave()
         {
             bool isDeleteSuccessful = true;
 
@@ -110,7 +110,7 @@ namespace Assets.Scripts.SaveSystem
             }
         }
 
-        private void SendLog(string message)
+        private static void SendLog(string message)
         {
             Debug.Log($"{DebugPrefix}:{message}");
         }

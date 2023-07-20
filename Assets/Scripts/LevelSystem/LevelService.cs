@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using Assets.Scripts.CarSystem;
+using Assets.Scripts.SaveSystem;
 using UnityEngine.SceneManagement;
 using Assets.Scripts.LevelSystem.Data;
 
@@ -18,10 +20,29 @@ namespace Assets.Scripts.LevelSystem
 
         #region Variables
 
+        private const string LevelIndexSaveKey = "LevelIndexSaveKey";
+
         [SerializeField] private LevelData _mainScene;
-        [SerializeField] private LevelData _menuScene;
         [SerializeField] private LevelData _gameScene;
 
+        [SerializeField] private AllCarLevelData _allCarLevelData;
+
+        #region Properties
+
+        public int LevelIndex 
+        { 
+            get
+            {
+                return SaveService.Load(LevelIndexSaveKey, 0);
+            }
+            set 
+            {
+                SaveService.Save(LevelIndexSaveKey, value);
+            } 
+        }
+
+        #endregion Properties
+        
         #endregion Variables
 
         #region Unity Functions
@@ -42,13 +63,12 @@ namespace Assets.Scripts.LevelSystem
 
         public void Initialize()
         {
-            LoadLevel(_menuScene, LoadSceneMode.Additive);
+            LoadLevel(_gameScene, LoadSceneMode.Additive);
         }
 
         public void Dispose()
         {
             _mainScene = null;
-            _menuScene = null;
             _gameScene = null;
         }
 
@@ -57,9 +77,14 @@ namespace Assets.Scripts.LevelSystem
             LevelLoadRequested?.Invoke(levelData, loadSceneMode);
         }
 
-        public void LoadGameSceneFromMenu()
+        public void OnLevelCompleted()
         {
-            LevelUnloadAndLoadRequested?.Invoke(_menuScene, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects, _gameScene, LoadSceneMode.Additive);
+            LevelIndex++;
+        }
+
+        public CarLevelData GetCurrentCarLevelData()
+        {
+            return _allCarLevelData.GetCarLevelDataByIndex(LevelIndex);
         }
 
         #endregion Functions

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
-using Assets.Scripts.CarSystem.Data;
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.CarSystem.Data;
 
 namespace Assets.Scripts.CarSystem
 {
@@ -14,7 +14,7 @@ namespace Assets.Scripts.CarSystem
 
         #endregion Events
 
-        #region 
+        #region Variables
 
         private const float DegreeToRadian = Mathf.PI / 180f;
 
@@ -22,9 +22,9 @@ namespace Assets.Scripts.CarSystem
 
         private float _currentRotation;
 
-        [SerializeField] private CarSettings _settings;
-        [SerializeField] private CarPathData _pathData;
+        private CarPathData _pathData;
 
+        [SerializeField] private CarSettings _settings;
         [SerializeField] private Rigidbody2D _rigidbody;
 
         #endregion Variables
@@ -38,11 +38,6 @@ namespace Assets.Scripts.CarSystem
         #endregion Properties
 
         #region Unity Functions
-
-        private void Awake()
-        {
-            Initialize();
-        }
 
         private void Update()
         {
@@ -60,8 +55,6 @@ namespace Assets.Scripts.CarSystem
 
         public void Initialize()
         {
-            _currentRotation = _rigidbody.rotation;
-
             SetPositionToStartPosition();
             StopMovement();
         }
@@ -71,6 +64,11 @@ namespace Assets.Scripts.CarSystem
             _settings = null;
             _pathData = null;
             _rigidbody = null;
+        }
+
+        public void SetPathData(CarPathData pathData)
+        {
+            _pathData = pathData;
         }
 
         public void StartMovement()
@@ -83,7 +81,6 @@ namespace Assets.Scripts.CarSystem
         {
             IsMovementActive = false;
 
-            _rigidbody.simulated = false;
             _rigidbody.velocity = Vector2.zero;
             _rigidbody.angularVelocity = 0f;
         }
@@ -91,7 +88,10 @@ namespace Assets.Scripts.CarSystem
         public void SetPositionToStartPosition()
         {
             transform.position = _pathData.StartPosition;
-            transform.rotation = new Quaternion(0f, 0f, Mathf.Sin(_pathData.StartRotation * DegreeToRadian), Mathf.Cos(_pathData.StartRotation * DegreeToRadian));
+            //transform.rotation = new Quaternion(0f, 0f, Mathf.Sin(-_pathData.StartRotation * DegreeToRadian), Mathf.Cos(-_pathData.StartRotation * DegreeToRadian));
+
+            _currentRotation = _pathData.StartRotation;
+            _rigidbody.rotation = _currentRotation;
         }
 
         private void Move()

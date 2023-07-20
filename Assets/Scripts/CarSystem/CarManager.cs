@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts.LevelSystem;
 using Assets.Scripts.CarSystem.Data;
 
 namespace Assets.Scripts.CarSystem
@@ -22,6 +23,8 @@ namespace Assets.Scripts.CarSystem
         private CarHandler _cachedCarHandler;
         private CarHandler _currentCarHandler;
         private List<CarHandler> _playedCarList;
+
+        private CarLevelData _carLevelData;
 
         [SerializeField] private CarManagerSettings _settings;
         [SerializeField] private CarHandler _carHandlerPrefab;
@@ -48,12 +51,22 @@ namespace Assets.Scripts.CarSystem
         {
             _playedCarList = new List<CarHandler>();
 
+            FetchCarLevelData();
             DecideCarSpawnOrAllCarsCompleted();
         }
 
         public void Dispose()
         {
             _settings = null;
+        }
+
+        private void FetchCarLevelData()
+        {
+            LevelService levelService = FindObjectOfType<LevelService>();
+
+            if (levelService == null) return;
+
+            _carLevelData = levelService.GetCurrentCarLevelData();
         }
 
         private bool IsOutOfCars()
@@ -83,6 +96,8 @@ namespace Assets.Scripts.CarSystem
 
         public void OnCarCompletedPath()
         {
+            _currentCarIndex++;
+
             _playedCarList.Add(_currentCarHandler);
             StopCarMovements();
             SubscribeToCar(false);
@@ -101,6 +116,7 @@ namespace Assets.Scripts.CarSystem
         private void SpawnCar()
         {
             _currentCarHandler = Instantiate(_carHandlerPrefab, transform);
+            _currentCarHandler.SetPathData(_carLevelData.GetCarPathDataByIndex(_currentCarIndex));
             _currentCarHandler.Initialize();
 
             FinishPositionUpdated?.Invoke(_currentCarHandler.PathData.FinishPosition);
