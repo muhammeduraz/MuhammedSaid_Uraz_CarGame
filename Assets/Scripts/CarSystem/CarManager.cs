@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Assets.Scripts.CarSystem.Data;
-using Assets.Scripts.GameSystem.States;
 
 namespace Assets.Scripts.CarSystem
 {
@@ -11,6 +10,7 @@ namespace Assets.Scripts.CarSystem
         #region Events
 
         public Action AllCarsCompleted; 
+        public Action<Vector2> FinishPositionUpdated;
         public Action TapToPlayButtonAppearRequested; 
         
         #endregion Events
@@ -66,6 +66,9 @@ namespace Assets.Scripts.CarSystem
             if (!IsOutOfCars())
             {
                 SpawnCar();
+                ResetCarPositions();
+
+                TapToPlayButtonAppearRequested?.Invoke();
             }
             else
             {
@@ -81,6 +84,7 @@ namespace Assets.Scripts.CarSystem
         public void OnCarCompletedPath()
         {
             _playedCarList.Add(_currentCarHandler);
+            StopCarMovements();
             SubscribeToCar(false);
 
             DecideCarSpawnOrAllCarsCompleted();
@@ -98,6 +102,8 @@ namespace Assets.Scripts.CarSystem
         {
             _currentCarHandler = Instantiate(_carHandlerPrefab, transform);
             _currentCarHandler.Initialize();
+
+            FinishPositionUpdated?.Invoke(_currentCarHandler.PathData.FinishPosition);
 
             SubscribeToCar(true);
         }
@@ -125,7 +131,12 @@ namespace Assets.Scripts.CarSystem
         {
             for (int i = 0; i < _playedCarList.Count; i++)
             {
-                _cachedCarHandler.StartMovement();
+                _cachedCarHandler = _playedCarList[i];
+
+                if (_cachedCarHandler != null)
+                {
+                    _cachedCarHandler.StartMovement();
+                }
             }
 
             _currentCarHandler.StartMovement();
@@ -135,7 +146,12 @@ namespace Assets.Scripts.CarSystem
         {
             for (int i = 0; i < _playedCarList.Count; i++)
             {
-                _cachedCarHandler.StopMovement();
+                _cachedCarHandler = _playedCarList[i];
+
+                if (_cachedCarHandler != null)
+                {
+                    _cachedCarHandler.StopMovement();
+                }
             }
 
             _currentCarHandler.StopMovement();
@@ -145,7 +161,12 @@ namespace Assets.Scripts.CarSystem
         {
             for (int i = 0; i < _playedCarList.Count; i++)
             {
-                _cachedCarHandler.SetPositionToStartPosition();
+                _cachedCarHandler = _playedCarList[i];
+
+                if (_cachedCarHandler != null)
+                {
+                    _cachedCarHandler.SetPositionToStartPosition();
+                }
             }
 
             _currentCarHandler.SetPositionToStartPosition();

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using Assets.Scripts.CarSystem.Data;
-using Assets.Scripts.ObstacleSystem;
+using Assets.Scripts.Interfaces;
 
 namespace Assets.Scripts.CarSystem
 {
@@ -102,23 +102,17 @@ namespace Assets.Scripts.CarSystem
             _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _currentRotation, _settings.RotationLerpSpeed * Time.deltaTime);
         }
 
-        private void OnHitAnObstacle()
-        {
-            CarHitAnObstacle?.Invoke();
-        }
-
         #endregion Functions
 
         #region Trigger Functions
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            collider.TryGetComponent(out IObstacle obstacle);
+            collider.TryGetComponent(out ITriggerable triggerable);
 
-            if (obstacle == null) return;
+            if (triggerable == null) return;
 
-            obstacle.OnObstacleHit();
-            OnHitAnObstacle();
+            triggerable.OnTriggered(this);
         }
 
         #endregion Trigger Functions

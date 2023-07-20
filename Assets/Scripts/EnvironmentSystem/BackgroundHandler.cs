@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
-namespace Assets.Scripts.ObstacleSystem
+namespace Assets.Scripts
 {
-    public abstract class BaseObstacle : MonoBehaviour, IObstacle, IInitializable, IDisposable
+    public class BackgroundHandler : MonoBehaviour, IDisposable
     {
         #region Variables
 
@@ -24,6 +25,11 @@ namespace Assets.Scripts.ObstacleSystem
             Initialize();
         }
 
+        private void Update()
+        {
+
+        }
+
         private void OnDestroy()
         {
             Dispose();
@@ -33,17 +39,12 @@ namespace Assets.Scripts.ObstacleSystem
 
         #region Functions
 
-        public virtual void Initialize()
+        private void Initialize()
         {
 
         }
 
-        public virtual void Dispose()
-        {
-
-        }
-
-        public virtual void OnObstacleHit()
+        public void Dispose()
         {
 
         }

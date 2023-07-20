@@ -57,7 +57,7 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - 4x4_door_blue_r
   - 4x4_door_blue
-  - Frame 3
+  - StandardSquare
   - 4x4_blue
   m_RenderDataMap: {}
   m_Tag: InGame_Textures
