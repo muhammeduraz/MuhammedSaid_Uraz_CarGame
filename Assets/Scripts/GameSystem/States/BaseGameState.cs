@@ -10,6 +10,12 @@ namespace Assets.Scripts.GameSystem.States
 
         #endregion Variables
 
+        #region Properties
+        
+        public GameStateType GameStateType => gameStateType;
+        
+        #endregion Properties
+
         #region Functions
 
         public virtual void Initialize()

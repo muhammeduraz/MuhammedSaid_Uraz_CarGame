@@ -13,7 +13,7 @@ namespace Assets.Scripts.GameSystem.States
 
         #region Variables
 
-        private BaseGameState _currentGameState;
+        private IGameState _currentGameState;
 
         private readonly List<BaseGameState> _gameStateList;
 
@@ -48,7 +48,7 @@ namespace Assets.Scripts.GameSystem.States
 
         public void ChangeGameState(GameStateType gameStateType)
         {
-            if (_currentGameState && gameStateType == _currentGameState.gameStateType)
+            if (_currentGameState != null && gameStateType == _currentGameState.GameStateType)
                 return;
 
             DeactivateCurrentGameState();
