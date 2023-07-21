@@ -79,7 +79,7 @@ namespace Assets.Scripts.CanvasSystem.Menus
             sequence
                 .Append(_canvasGroup.DOFade(1f, 0.25f).SetEase(Ease.Linear))
                 .Append(_levelCompletedText.transform.DOScale(1f, 0.25f).SetEase(Ease.OutBack))
-                .AppendInterval(1f)
+                .AppendInterval(0.5f)
                 .Append(_nextLevelButton.transform.DOScale(1f, 0.25f).SetEase(Ease.OutBack));
         }
 
