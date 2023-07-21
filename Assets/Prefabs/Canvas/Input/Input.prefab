@@ -135,7 +135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _value: -1
-  _button: {fileID: 6564703787302031592}
 --- !u!1 &4889003070697543117
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196cee272e21b5e4ca80e1df640c09e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonList: []
+  _buttonList:
+  - {fileID: 5757786478166604666}
+  - {fileID: 4883347671399172697}
 --- !u!114 &7838994500193412122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,4 +364,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _value: 1
-  _button: {fileID: 2039413333171031461}

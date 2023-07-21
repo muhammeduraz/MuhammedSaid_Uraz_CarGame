@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Assets.Scripts.Interfaces;
 using Assets.Scripts.CarSystem.Data;
+using Assets.Scripts.InputSystem;
 
 namespace Assets.Scripts.CarSystem
 {
@@ -11,6 +12,9 @@ namespace Assets.Scripts.CarSystem
 
         public Action CarHitAnObstacle;
         public Action CarCompletedPath;
+
+        public delegate float InputRequest();
+        public InputRequest GetInputValue;
 
         #endregion Events
 
@@ -96,10 +100,28 @@ namespace Assets.Scripts.CarSystem
 
         private void Move()
         {
-            _currentRotation += Input.GetAxis("Horizontal") * _settings.RotationSpeed * -10f * Time.deltaTime;
+            if (!sub) return;
+            _currentRotation += GetInputValue() * _settings.RotationSpeed * -10f * Time.deltaTime;
 
             _rigidbody.velocity = transform.up * _settings.MovementSpeed;
             _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _currentRotation, _settings.RotationLerpSpeed * Time.deltaTime);
+        }
+
+        bool sub;
+        public void SubscribeToInput(bool subscribe)
+        {
+            InputHandler inputHandler = FindObjectOfType<InputHandler>();
+
+            if (subscribe)
+            {
+                sub = true;
+                GetInputValue += inputHandler.GetInputValue;
+            }
+            else
+            {
+                sub = false;
+                GetInputValue -= inputHandler.GetInputValue;
+            }
         }
 
         #endregion Functions
