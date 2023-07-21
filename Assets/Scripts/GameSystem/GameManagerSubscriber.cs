@@ -40,6 +40,7 @@ namespace Assets.Scripts.GameSystem
         protected override void SubscribeEvents()
         {
             _gameManager.SceneReloadRequested += _sceneService.ReloadCurrentLevel;
+            _gameManager.GameStateChanged += _levelService.OnGameStateChangedToWin;
 
             _playButtonHandler.PlayButtonClicked += _gameManager.OnPlayButtonClicked;
         }
@@ -48,6 +49,7 @@ namespace Assets.Scripts.GameSystem
         {
             _gameManager.SceneReloadRequested -= _sceneService.ReloadCurrentLevel;
 
+            _gameManager.GameStateChanged -= _levelService.OnGameStateChangedToWin;
             _playButtonHandler.PlayButtonClicked -= _gameManager.OnPlayButtonClicked;
         }
 

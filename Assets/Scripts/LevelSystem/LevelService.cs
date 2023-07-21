@@ -4,6 +4,7 @@ using Assets.Scripts.CarSystem;
 using Assets.Scripts.SaveSystem;
 using UnityEngine.SceneManagement;
 using Assets.Scripts.LevelSystem.Data;
+using Assets.Scripts.GameSystem.States;
 
 namespace Assets.Scripts.LevelSystem
 {
@@ -63,7 +64,7 @@ namespace Assets.Scripts.LevelSystem
 
         public void Initialize()
         {
-            LoadLevel(_gameScene, LoadSceneMode.Additive);
+            LoadGameScene();
         }
 
         public void Dispose()
@@ -85,6 +86,19 @@ namespace Assets.Scripts.LevelSystem
         public CarLevelData GetCurrentCarLevelData()
         {
             return _allCarLevelData.GetCarLevelDataByIndex(LevelIndex);
+        }
+
+        public void LoadGameScene()
+        {
+            LoadLevel(_gameScene, LoadSceneMode.Additive);
+        }
+
+        public void OnGameStateChangedToWin(GameStateType gameStateType)
+        {
+            if (gameStateType == GameStateType.Win)
+            {
+                OnLevelCompleted();
+            }
         }
 
         #endregion Functions
