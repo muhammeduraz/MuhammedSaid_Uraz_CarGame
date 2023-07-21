@@ -64,8 +64,9 @@ namespace Assets.Scripts.CanvasSystem.Menus
 
         public void Appear()
         {
-            SetupNextLevelButton();
+            transform.localScale = Vector3.one;
 
+            SetupNextLevelButton();
             StartAppearAnimation();
         }
 
