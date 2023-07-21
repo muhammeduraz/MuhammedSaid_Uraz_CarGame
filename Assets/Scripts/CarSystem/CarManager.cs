@@ -97,6 +97,7 @@ namespace Assets.Scripts.CarSystem
         public void OnCarCompletedPath()
         {
             _currentCarIndex++;
+            _currentCarHandler.OnPathCompleted();
 
             _playedCarList.Add(_currentCarHandler);
             StopCarMovements();

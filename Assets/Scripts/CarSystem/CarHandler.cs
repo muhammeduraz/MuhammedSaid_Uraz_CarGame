@@ -1,8 +1,10 @@
 using System;
 using UnityEngine;
 using Assets.Scripts.Interfaces;
-using Assets.Scripts.CarSystem.Data;
 using Assets.Scripts.InputSystem;
+using System.Collections.Generic;
+using Assets.Scripts.CarSystem.Data;
+using Assets.Scripts.CarSystem.States;
 
 namespace Assets.Scripts.CarSystem
 {
@@ -27,16 +29,17 @@ namespace Assets.Scripts.CarSystem
         private float _currentRotation;
 
         private CarPathData _pathData;
+        private CarStateHandler _stateHandler;
 
         [SerializeField] private CarSettings _settings;
         [SerializeField] private Rigidbody2D _rigidbody;
+        [SerializeField] private List<BaseCarState> _carStateList;
 
         #endregion Variables
 
         #region Properties
 
         public bool IsMovementActive { get => _isMovementActive; set { _isMovementActive = value; enabled = value; } }
-
         public CarPathData PathData { get => _pathData; }
 
         #endregion Properties
@@ -45,7 +48,7 @@ namespace Assets.Scripts.CarSystem
 
         private void Update()
         {
-            Move();
+            _stateHandler.CurrentCarState.OnStateUpdate();
         }
 
         private void OnDestroy()
@@ -59,6 +62,10 @@ namespace Assets.Scripts.CarSystem
 
         public void Initialize()
         {
+            _stateHandler = new CarStateHandler(this, _carStateList);
+            _stateHandler.Initialize();
+            _stateHandler.ChangeCarState(typeof(ControlCarState));
+
             SetPositionToStartPosition();
             StopMovement();
         }
@@ -68,6 +75,14 @@ namespace Assets.Scripts.CarSystem
             _settings = null;
             _pathData = null;
             _rigidbody = null;
+
+            _stateHandler.Dispose();
+            _stateHandler = null;
+        }
+
+        public void OnPathCompleted()
+        {
+            _stateHandler.ChangeCarState(typeof(AutomaticCarState));
         }
 
         public void SetPathData(CarPathData pathData)
@@ -98,28 +113,24 @@ namespace Assets.Scripts.CarSystem
             _rigidbody.rotation = _currentRotation;
         }
 
-        private void Move()
+        public void Move()
         {
-            if (!sub) return;
             _currentRotation += GetInputValue() * _settings.RotationSpeed * -10f * Time.deltaTime;
 
             _rigidbody.velocity = transform.up * _settings.MovementSpeed;
             _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _currentRotation, _settings.RotationLerpSpeed * Time.deltaTime);
         }
 
-        bool sub;
         public void SubscribeToInput(bool subscribe)
         {
             InputHandler inputHandler = FindObjectOfType<InputHandler>();
 
             if (subscribe)
             {
-                sub = true;
                 GetInputValue += inputHandler.GetInputValue;
             }
             else
             {
-                sub = false;
                 GetInputValue -= inputHandler.GetInputValue;
             }
         }

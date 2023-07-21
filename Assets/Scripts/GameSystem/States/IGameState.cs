@@ -1,6 +1,8 @@
+using System;
+
 namespace Assets.Scripts.GameSystem.States
 {
-    public interface IGameState
+    public interface IGameState : IInitializable, IDisposable
     {
         #region Properties
         
@@ -9,8 +11,6 @@ namespace Assets.Scripts.GameSystem.States
         #endregion Properties
         
         #region Functions
-
-        public void Initialize();
 
         public void OnStateEnter();
 

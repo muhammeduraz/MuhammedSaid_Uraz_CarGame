@@ -132,8 +132,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 22385aeb2130e9740bc46d811ee7ff56, type: 2}
-  _pathData: {fileID: 11400000, guid: 052159aee736b9b4e835b5ffa4bd0cb4, type: 2}
   _rigidbody: {fileID: 1759504661128459320}
+  _carStateList:
+  - {fileID: 11400000, guid: 718cc705378a99143897a070b97a500e, type: 2}
+  - {fileID: 11400000, guid: e0c37aaddc42edc448bedf5213fec922, type: 2}
 --- !u!50 &1759504661128459320
 Rigidbody2D:
   serializedVersion: 4

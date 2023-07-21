@@ -1,36 +1,41 @@
 using UnityEngine;
 
-namespace Assets.Scripts.GameSystem.States
+namespace Assets.Scripts.CarSystem.States
 {
-    public abstract class BaseGameState : ScriptableObject, IGameState
+    public abstract class BaseCarState : ScriptableObject, ICarState
     {
         #region Variables
 
-        public GameStateType gameStateType;
+        protected CarHandler carHandler;
 
         #endregion Variables
 
         #region Properties
-        
-        public GameStateType GameStateType => gameStateType;
+
+
 
         #endregion Properties
 
         #region Functions
 
-        public virtual void Initialize()
+        public virtual void Initialize(CarHandler carHandler)
         {
-            
+            this.carHandler = carHandler;
         }
 
         public virtual void Dispose()
         {
-            
+            carHandler = null;
         }
 
         public virtual void OnStateEnter()
         {
+            
+        }
 
+        public virtual void OnStateUpdate()
+        {
+            
         }
 
         public virtual void OnStateExit()

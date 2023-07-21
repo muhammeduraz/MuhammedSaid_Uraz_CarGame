@@ -44,6 +44,18 @@ namespace Assets.Scripts.GameSystem.States
         public void Dispose()
         {
             _currentGameState = null;
+
+            IGameState gameState = null;
+
+            for (int i = 0; i < _gameStateList.Count; i++)
+            {
+                gameState = _gameStateList[i];
+
+                if (gameState != null)
+                {
+                    gameState.Dispose();
+                }
+            }
         }
 
         public void ChangeGameState(GameStateType gameStateType)
