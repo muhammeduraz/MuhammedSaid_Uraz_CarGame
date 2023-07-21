@@ -129,13 +129,11 @@ namespace Assets.Scripts.CarSystem
         {
             if (subscribe)
             {
-                _currentCarHandler.SubscribeToInput(true);
                 _currentCarHandler.CarCompletedPath += OnCarCompletedPath;
                 _currentCarHandler.CarHitAnObstacle += OnCarHitAnObstacle;
             }
             else
             {
-                _currentCarHandler.SubscribeToInput(false);
                 _currentCarHandler.CarCompletedPath -= OnCarCompletedPath;
                 _currentCarHandler.CarHitAnObstacle -= OnCarHitAnObstacle;
             }

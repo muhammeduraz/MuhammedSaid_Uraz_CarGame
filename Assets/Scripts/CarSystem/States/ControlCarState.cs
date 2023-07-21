@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.InputSystem;
 
 namespace Assets.Scripts.CarSystem.States
 {
@@ -32,18 +33,44 @@ namespace Assets.Scripts.CarSystem.States
         public override void OnStateEnter()
         {
             base.OnStateEnter();
+
+            SubscribeToInput(true);
         }
 
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
 
-            carHandler.Move();
+            Move();
         }
 
         public override void OnStateExit()
         {
             base.OnStateExit();
+
+            SubscribeToInput(false);
+        }
+
+        private void SubscribeToInput(bool subscribe)
+        {
+            InputHandler inputHandler = FindObjectOfType<InputHandler>();
+
+            if (subscribe)
+            {
+                carHandler.GetInputValue += inputHandler.GetInputValue;
+            }
+            else
+            {
+                carHandler.GetInputValue -= inputHandler.GetInputValue;
+            }
+        }
+
+        private void Move()
+        {
+            carHandler.CurrentRotation += carHandler.GetInputValue() * carHandler.Settings.RotationSpeed * -10f * Time.deltaTime;
+
+            carHandler.Rigidbody.velocity = carHandler.transform.up * carHandler.Settings.MovementSpeed;
+            carHandler.Rigidbody.rotation = Mathf.Lerp(carHandler.Rigidbody.rotation, carHandler.CurrentRotation, carHandler.Settings.RotationLerpSpeed * Time.deltaTime);
         }
 
         #endregion Functions

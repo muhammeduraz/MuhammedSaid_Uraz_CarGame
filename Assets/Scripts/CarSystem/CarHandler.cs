@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using Assets.Scripts.Interfaces;
-using Assets.Scripts.InputSystem;
 using System.Collections.Generic;
 using Assets.Scripts.CarSystem.Data;
 using Assets.Scripts.CarSystem.States;
@@ -22,8 +21,6 @@ namespace Assets.Scripts.CarSystem
 
         #region Variables
 
-        private const float DegreeToRadian = Mathf.PI / 180f;
-
         private bool _isMovementActive;
 
         private float _currentRotation;
@@ -40,7 +37,11 @@ namespace Assets.Scripts.CarSystem
         #region Properties
 
         public bool IsMovementActive { get => _isMovementActive; set { _isMovementActive = value; enabled = value; } }
+        public float CurrentRotation { get => _currentRotation; set => _currentRotation = value; }
+        
         public CarPathData PathData { get => _pathData; }
+        public CarSettings Settings { get => _settings; }
+        public Rigidbody2D Rigidbody { get => _rigidbody; }
 
         #endregion Properties
 
@@ -107,32 +108,9 @@ namespace Assets.Scripts.CarSystem
         public void SetPositionToStartPosition()
         {
             transform.position = _pathData.StartPosition;
-            //transform.rotation = new Quaternion(0f, 0f, Mathf.Sin(-_pathData.StartRotation * DegreeToRadian), Mathf.Cos(-_pathData.StartRotation * DegreeToRadian));
 
             _currentRotation = _pathData.StartRotation;
             _rigidbody.rotation = _currentRotation;
-        }
-
-        public void Move()
-        {
-            _currentRotation += GetInputValue() * _settings.RotationSpeed * -10f * Time.deltaTime;
-
-            _rigidbody.velocity = transform.up * _settings.MovementSpeed;
-            _rigidbody.rotation = Mathf.Lerp(_rigidbody.rotation, _currentRotation, _settings.RotationLerpSpeed * Time.deltaTime);
-        }
-
-        public void SubscribeToInput(bool subscribe)
-        {
-            InputHandler inputHandler = FindObjectOfType<InputHandler>();
-
-            if (subscribe)
-            {
-                GetInputValue += inputHandler.GetInputValue;
-            }
-            else
-            {
-                GetInputValue -= inputHandler.GetInputValue;
-            }
         }
 
         #endregion Functions
