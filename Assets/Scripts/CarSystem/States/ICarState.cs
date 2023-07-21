@@ -6,7 +6,7 @@ namespace Assets.Scripts.CarSystem.States
     {
         #region Functions
 
-        public void Initialize(CarHandler carHandler);
+        public void Initialize(CarHandler carHandler, CarStateHandler stateHandler);
 
         public void OnStateEnter();
 

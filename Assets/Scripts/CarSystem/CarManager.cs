@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Assets.Scripts.LevelSystem;
 using Assets.Scripts.CarSystem.Data;
+using Assets.Scripts.CarSystem.States;
 
 namespace Assets.Scripts.CarSystem
 {
@@ -152,11 +153,11 @@ namespace Assets.Scripts.CarSystem
 
                 if (_cachedCarHandler != null)
                 {
-                    _cachedCarHandler.StartMovement();
+                    _cachedCarHandler.StateHandler.ChangeCarStateToMovement();
                 }
             }
 
-            _currentCarHandler.StartMovement();
+            _currentCarHandler.StateHandler.ChangeCarStateToMovement();
         }
 
         public void StopCarMovements()
@@ -167,11 +168,11 @@ namespace Assets.Scripts.CarSystem
 
                 if (_cachedCarHandler != null)
                 {
-                    _cachedCarHandler.StopMovement();
+                    _cachedCarHandler.StateHandler.ChangeCarState(typeof(ResetCarState));
                 }
             }
 
-            _currentCarHandler.StopMovement();
+            _currentCarHandler.StateHandler.ChangeCarState(typeof(ResetCarState));
         }
 
         public void ResetCarPositions()

@@ -7,20 +7,16 @@ namespace Assets.Scripts.CarSystem.States
         #region Variables
 
         protected CarHandler carHandler;
+        protected CarStateHandler stateHandler;
 
         #endregion Variables
 
-        #region Properties
-
-
-
-        #endregion Properties
-
         #region Functions
 
-        public virtual void Initialize(CarHandler carHandler)
+        public virtual void Initialize(CarHandler carHandler, CarStateHandler stateHandler)
         {
             this.carHandler = carHandler;
+            this.stateHandler = stateHandler;
         }
 
         public virtual void Dispose()

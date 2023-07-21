@@ -11,17 +11,11 @@ namespace Assets.Scripts.CarSystem.States
 
         #endregion Variables
 
-        #region Properties
-
-
-
-        #endregion Properties
-
         #region Functions
 
-        public override void Initialize(CarHandler carHandler)
+        public override void Initialize(CarHandler carHandler, CarStateHandler stateHandler)
         {
-            base.Initialize(carHandler);
+            base.Initialize(carHandler, stateHandler);
         }
 
         public override void Dispose()

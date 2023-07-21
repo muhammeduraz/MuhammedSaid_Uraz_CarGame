@@ -45,7 +45,7 @@ namespace Assets.Scripts.CarSystem.States
 
                 if (gameState != null)
                 {
-                    gameState.Initialize(_carHandler);
+                    gameState.Initialize(_carHandler, this);
                 }
             }
         }
@@ -64,6 +64,18 @@ namespace Assets.Scripts.CarSystem.States
                 {
                     gameState.Dispose();
                 }
+            }
+        }
+
+        public void ChangeCarStateToMovement()
+        {
+            if (!_carHandler.IsPathCompleted)
+            {
+                ChangeCarState(typeof(ControlCarState));
+            }
+            else
+            {
+                ChangeCarState(typeof(AutomaticCarState));
             }
         }
 

@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: fcb1e86dd6f6b472798b7ce6713f5b73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -134,8 +134,10 @@ MonoBehaviour:
   _settings: {fileID: 11400000, guid: 22385aeb2130e9740bc46d811ee7ff56, type: 2}
   _rigidbody: {fileID: 1759504661128459320}
   _carStateList:
-  - {fileID: 11400000, guid: 718cc705378a99143897a070b97a500e, type: 2}
+  - {fileID: 11400000, guid: 38d8420e211346842991d6274d20305f, type: 2}
+  - {fileID: 11400000, guid: ea0718f3f95299746b874ebe575a8bd8, type: 2}
   - {fileID: 11400000, guid: e0c37aaddc42edc448bedf5213fec922, type: 2}
+  - {fileID: 11400000, guid: 718cc705378a99143897a070b97a500e, type: 2}
 --- !u!50 &1759504661128459320
 Rigidbody2D:
   serializedVersion: 4
@@ -341,7 +343,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 0b15d4b72d6b54ea0a89a6f4a2e68b26, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

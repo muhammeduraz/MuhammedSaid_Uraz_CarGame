@@ -21,6 +21,7 @@ namespace Assets.Scripts.CarSystem
 
         #region Variables
 
+        private bool _isPathCompleted;
         private bool _isMovementActive;
 
         private float _currentRotation;
@@ -36,12 +37,14 @@ namespace Assets.Scripts.CarSystem
 
         #region Properties
 
+        public bool IsPathCompleted { get => _isPathCompleted; }
         public bool IsMovementActive { get => _isMovementActive; set { _isMovementActive = value; enabled = value; } }
         public float CurrentRotation { get => _currentRotation; set => _currentRotation = value; }
         
         public CarPathData PathData { get => _pathData; }
         public CarSettings Settings { get => _settings; }
         public Rigidbody2D Rigidbody { get => _rigidbody; }
+        public CarStateHandler StateHandler { get => _stateHandler; }
 
         #endregion Properties
 
@@ -65,10 +68,9 @@ namespace Assets.Scripts.CarSystem
         {
             _stateHandler = new CarStateHandler(this, _carStateList);
             _stateHandler.Initialize();
-            _stateHandler.ChangeCarState(typeof(ControlCarState));
+            _stateHandler.ChangeCarState(typeof(IdleCarState));
 
             SetPositionToStartPosition();
-            StopMovement();
         }
 
         public void Dispose()
@@ -81,28 +83,15 @@ namespace Assets.Scripts.CarSystem
             _stateHandler = null;
         }
 
-        public void OnPathCompleted()
-        {
-            _stateHandler.ChangeCarState(typeof(AutomaticCarState));
-        }
-
         public void SetPathData(CarPathData pathData)
         {
             _pathData = pathData;
         }
 
-        public void StartMovement()
+        public void OnPathCompleted()
         {
-            IsMovementActive = true;
-            _rigidbody.simulated = true;
-        }
-
-        public void StopMovement()
-        {
-            IsMovementActive = false;
-
-            _rigidbody.velocity = Vector2.zero;
-            _rigidbody.angularVelocity = 0f;
+            _stateHandler.ChangeCarState(typeof(ResetCarState));
+            _isPathCompleted = true;
         }
 
         public void SetPositionToStartPosition()
