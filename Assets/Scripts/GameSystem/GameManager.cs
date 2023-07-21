@@ -46,7 +46,9 @@ namespace Assets.Scripts.GameSystem
 
         private void Initialize()
         {
-            _gameStateHandler = new GameStateHandler(_gameStateList);
+            List<IGameState> list = new List<IGameState>();
+            foreach (IGameState gameState in _gameStateList) list.Add(gameState);
+            _gameStateHandler = new GameStateHandler(list);
         }
 
         public void Dispose()

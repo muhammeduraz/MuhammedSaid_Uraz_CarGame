@@ -15,20 +15,20 @@ namespace Assets.Scripts.GameSystem.States
 
         private IGameState _currentGameState;
 
-        private readonly List<BaseGameState> _gameStateList;
+        private readonly List<IGameState> _gameStateList;
 
         #endregion Variables
 
         #region Functions
 
-        public GameStateHandler(List<BaseGameState> gameStateList)
+        public GameStateHandler(List<IGameState> gameStateList)
         {
             _gameStateList = gameStateList;
         }
 
         public void Initialize()
         {
-            BaseGameState gameState = null;
+            IGameState gameState = null;
 
             for (int i = 0; i < _gameStateList.Count; i++)
             {
@@ -76,15 +76,15 @@ namespace Assets.Scripts.GameSystem.States
             }
         }
 
-        private BaseGameState GetGameStateByStateType(GameStateType gameStateType)
+        private IGameState GetGameStateByStateType(GameStateType gameStateType)
         {
-            BaseGameState gameState = null;
+            IGameState gameState = null;
 
             for (int i = 0; i < _gameStateList.Count; i++)
             {
                 gameState = _gameStateList[i];
 
-                if (gameState != null && gameState.gameStateType == gameStateType)
+                if (gameState != null && gameState.GameStateType == gameStateType)
                 {
                     return gameState;
                 }
