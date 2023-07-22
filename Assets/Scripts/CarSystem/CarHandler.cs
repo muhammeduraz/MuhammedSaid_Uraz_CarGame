@@ -117,6 +117,11 @@ namespace Assets.Scripts.CarSystem
             _isPathCompleted = true;
         }
 
+        public void OnCarHitAnObstacle()
+        {
+            PathHandler.ResetIVDData();
+        }
+
         public void OnTriggered(CarHandler carHandler)
         {
             if (!carHandler.IsCurrentCar) return;

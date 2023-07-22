@@ -53,6 +53,7 @@ namespace Assets.Scripts.CarSystem
             _playedCarList = new List<CarHandler>();
 
             FetchCarLevelData();
+            InstantiateObstaclePrefab();
             DecideCarSpawnOrAllCarsCompleted();
         }
 
@@ -68,6 +69,13 @@ namespace Assets.Scripts.CarSystem
             if (levelService == null) return;
 
             _carLevelData = levelService.GetCurrentCarLevelData();
+        }
+
+        private void InstantiateObstaclePrefab()
+        {
+            if (_carLevelData == null) return;
+
+            Instantiate(_carLevelData.ObstaclePrefab, Vector3.zero, Quaternion.identity, null);
         }
 
         private bool IsOutOfCars()
@@ -111,6 +119,7 @@ namespace Assets.Scripts.CarSystem
             StopCarMovements();
             ResetCars();
 
+            _currentCarHandler.OnCarHitAnObstacle();
             TapToPlayButtonAppearRequested?.Invoke();
         }
 

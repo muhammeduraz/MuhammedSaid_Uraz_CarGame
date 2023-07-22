@@ -69,6 +69,11 @@ namespace Assets.Scripts.CarSystem
             return null;
         }
 
+        public void ResetIVDData()
+        {
+            _iVDDataList = new List<IVDData>();
+        }
+
         #endregion Functions
     }
 
