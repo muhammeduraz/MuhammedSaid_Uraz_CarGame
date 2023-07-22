@@ -8,13 +8,12 @@ namespace Assets.Scripts.SaveSystem
         #region Variables
 
         private const string DebugPrefix = "SaveService";
-        private static string _cachedString = string.Empty;
 
         #endregion Variables
 
         #region Functions
 
-        public static void Save<T>(string key, T value)
+        public static void Save(string key, int value)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -24,18 +23,15 @@ namespace Assets.Scripts.SaveSystem
 
             try
             {
-                _cachedString = JsonUtility.ToJson(value);
-                PlayerPrefs.SetString(key, _cachedString);
+                PlayerPrefs.SetInt(key, value);
             }
             catch (Exception e)
             {
                 SendLog($"Save failed: Serialization error. {e}");
             }
-
-            _cachedString = string.Empty;
         }
 
-        public static T Load<T>(string key, T defaultValue = default)
+        public static int Load(string key, int defaultValue = 0)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -45,17 +41,15 @@ namespace Assets.Scripts.SaveSystem
 
             try
             {
-                _cachedString = PlayerPrefs.GetString(key, string.Empty);
-
-                if (string.IsNullOrEmpty(_cachedString))
+                if (string.IsNullOrEmpty(key))
                 {
                     Save(key, defaultValue);
                     SendLog($"Load failed: Saved json value is null or empty, laoding default value.");
                     return defaultValue;
                 }
 
-                T savedObject = JsonUtility.FromJson<T>(_cachedString);
-                return savedObject;
+                int result = PlayerPrefs.GetInt(key, defaultValue);
+                return result;
             }
             catch (Exception e)
             {
@@ -64,27 +58,9 @@ namespace Assets.Scripts.SaveSystem
             }
         }
 
-        public static bool HasSave<T>(string key)
+        public static bool HasSave(string key)
         {
             return !string.IsNullOrEmpty(key) && PlayerPrefs.HasKey(key);
-        }
-
-        public static void Delete<T>(string key)
-        {
-            if (string.IsNullOrEmpty(key))
-            {
-                SendLog($"Key is not or empty.");
-                return;
-            }
-
-            if (!PlayerPrefs.HasKey(key))
-            {
-                SendLog($"Key does not exist: {key}");
-                return;
-            }
-
-            PlayerPrefs.DeleteKey(key);
-            SendLog($"Key deleted successfully: {key}");
         }
 
         public static void DeleteSave()

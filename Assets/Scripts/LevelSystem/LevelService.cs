@@ -28,6 +28,8 @@ namespace Assets.Scripts.LevelSystem
 
         [SerializeField] private AllCarLevelData _allCarLevelData;
 
+        #endregion Variables
+
         #region Properties
 
         public int LevelIndex
@@ -44,8 +46,6 @@ namespace Assets.Scripts.LevelSystem
 
         #endregion Properties
         
-        #endregion Variables
-
         #region Unity Functions
 
         private void Awake()
