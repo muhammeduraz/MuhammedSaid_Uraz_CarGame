@@ -21,7 +21,7 @@ namespace Assets.Scripts.CarSystem
 
         #region Variables
 
-        public bool isCurrentCar; 
+        private bool _isCurrentCar; 
 
         private bool _isPathCompleted;
         private bool _isMovementActive;
@@ -35,10 +35,13 @@ namespace Assets.Scripts.CarSystem
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private List<BaseCarState> _carStateList;
 
+        [SerializeField] private List<SpriteRenderer> _spriteRendererList;
+
         #endregion Variables
 
         #region Properties
 
+        public bool IsCurrentCar { get => _isCurrentCar; }
         public bool IsPathCompleted { get => _isPathCompleted; }
         public bool IsMovementActive { get => _isMovementActive; set { _isMovementActive = value; enabled = value; } }
         public float CurrentRotation { get => _currentRotation; set => _currentRotation = value; }
@@ -83,6 +86,24 @@ namespace Assets.Scripts.CarSystem
             _stateHandler = null;
         }
 
+        public void SetAsCurrentCar(bool current)
+        {
+            if (current)
+            {
+                _isCurrentCar = true;
+
+                foreach (SpriteRenderer spriteRenderer in _spriteRendererList)
+                    spriteRenderer.color = Color.white;
+            }
+            else
+            {
+                _isCurrentCar = false;
+
+                foreach (SpriteRenderer spriteRenderer in _spriteRendererList)
+                    spriteRenderer.color = Color.gray;
+            }
+        }
+
         public void SetPathData(CarPathData pathData)
         {
             _pathHandler = new CarPathHandler(pathData);
@@ -90,13 +111,15 @@ namespace Assets.Scripts.CarSystem
 
         public void OnPathCompleted()
         {
+            SetAsCurrentCar(false);
+
             _stateHandler.ChangeCarState(typeof(ResetCarState));
             _isPathCompleted = true;
         }
 
         public void OnTriggered(CarHandler carHandler)
         {
-            if (isCurrentCar) return;
+            if (!carHandler.IsCurrentCar) return;
 
             carHandler.CarHitAnObstacle?.Invoke();
         }

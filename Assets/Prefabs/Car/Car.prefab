@@ -138,6 +138,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea0718f3f95299746b874ebe575a8bd8, type: 2}
   - {fileID: 11400000, guid: e0c37aaddc42edc448bedf5213fec922, type: 2}
   - {fileID: 11400000, guid: 718cc705378a99143897a070b97a500e, type: 2}
+  _spriteRendererList:
+  - {fileID: 1759504661353775226}
+  - {fileID: 1761863609266022372}
+  - {fileID: 2345328772151405539}
 --- !u!50 &1759504661128459320
 Rigidbody2D:
   serializedVersion: 4
@@ -169,7 +173,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0010197312, y: -0.0010197759}

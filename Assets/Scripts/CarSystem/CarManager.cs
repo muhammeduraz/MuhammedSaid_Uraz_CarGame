@@ -118,6 +118,7 @@ namespace Assets.Scripts.CarSystem
         {
             _currentCarHandler = Instantiate(_carHandlerPrefab, transform);
             _currentCarHandler.SetPathData(_carLevelData.GetCarPathDataByIndex(_currentCarIndex));
+            _currentCarHandler.SetAsCurrentCar(true);
             _currentCarHandler.Initialize();
 
             FinishPositionUpdated?.Invoke(_currentCarHandler.PathHandler.PathData.FinishPosition);
