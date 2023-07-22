@@ -56,12 +56,10 @@ namespace Assets.Scripts.CarSystem
 
             _currentIVDData = new IVDData(value);
             _iVDDataList.Add(_currentIVDData);
-            Debug.LogError("  :::  " + _iVDDataList.Count);
         }
 
         public IVDData GetIVDDataByIndex(int index)
         {
-                Debug.LogError(index + "  :::  " + _iVDDataList.Count);
             if (index < _iVDDataList.Count)
             {
                 return _iVDDataList[index];

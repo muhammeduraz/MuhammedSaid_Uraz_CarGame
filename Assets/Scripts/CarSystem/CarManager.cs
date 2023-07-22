@@ -99,7 +99,6 @@ namespace Assets.Scripts.CarSystem
         {
             _currentCarIndex++;
             _currentCarHandler.OnPathCompleted();
-
             _playedCarList.Add(_currentCarHandler);
             StopCarMovements();
             SubscribeToCar(false);

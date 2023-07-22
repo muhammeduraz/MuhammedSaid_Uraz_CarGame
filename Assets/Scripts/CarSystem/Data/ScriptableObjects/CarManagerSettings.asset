@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1446c5dda98d1d84486b54163de1aef0, type: 3}
   m_Name: CarManagerSettings
   m_EditorClassIdentifier: 
-  _carCount: 2
+  _carCount: 8

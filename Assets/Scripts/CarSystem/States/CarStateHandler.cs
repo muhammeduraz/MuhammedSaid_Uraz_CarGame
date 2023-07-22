@@ -31,7 +31,7 @@ namespace Assets.Scripts.CarSystem.States
             foreach (BaseCarState state in gameStateList)
             {
                 loopState = UnityEngine.Object.Instantiate(state);
-                _carStateList.Add(state);
+                _carStateList.Add(loopState);
             }
         }
 

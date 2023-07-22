@@ -54,9 +54,8 @@ namespace Assets.Scripts.CarSystem.States
 
         private void MoveThroughPath()
         {
-            Debug.LogError("0");
             if (_currentIVDData == null) return;
-            Debug.LogError("1");
+
             _currentIVDData.duration -= Time.deltaTime;
 
             carHandler.CurrentRotation += _currentIVDData.value * carHandler.Settings.RotationSpeed * -10f * Time.deltaTime;
@@ -64,6 +63,7 @@ namespace Assets.Scripts.CarSystem.States
             carHandler.Rigidbody.velocity = carHandler.transform.up * carHandler.Settings.MovementSpeed;
             carHandler.Rigidbody.rotation = Mathf.Lerp(carHandler.Rigidbody.rotation, carHandler.CurrentRotation, carHandler.Settings.RotationLerpSpeed * Time.deltaTime);
 
+            CheckIfCurrentIVDDataDurationConsumed();
         }
 
         private void OnCurrentIVDDataDurationConsumed()
