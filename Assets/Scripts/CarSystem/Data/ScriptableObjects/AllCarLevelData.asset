@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AllCarLevelData
   m_EditorClassIdentifier: 
   _carLevelDataList:
-  - {fileID: 11400000, guid: cdb9e5972381ae147a0f26d41e493fa0, type: 2}
+  - {fileID: 11400000, guid: 522a3422b2cdb494481c0fd4c555c40b, type: 2}

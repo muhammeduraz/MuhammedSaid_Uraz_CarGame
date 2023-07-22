@@ -20,5 +20,18 @@ namespace Assets.Scripts.CarSystem
         }
 
         #endregion Functions
+
+        #region Editor Functions
+
+#if UNITY_EDITOR
+
+        public void AddCarLevelData(CarLevelData carLevelData)
+        {
+            _carLevelDataList.Add(carLevelData);
+        }
+
+#endif
+
+#endregion Editor Functions
     }
 }

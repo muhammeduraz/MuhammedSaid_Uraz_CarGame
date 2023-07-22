@@ -21,5 +21,33 @@ namespace Assets.Scripts.CarSystem
         }
 
         #endregion Functions
+
+        #region Editor Functions
+
+#if UNITY_EDITOR
+
+        public void Initialize()
+        {
+            _carPathDataList = new List<CarPathData>();
+        }
+
+        public void SetCarPathDataList(List<CarPathData> carPathDataList)
+        {
+            _carPathDataList = new List<CarPathData>();
+
+            foreach (CarPathData data in carPathDataList)
+            {
+                _carPathDataList.Add(data);
+            }
+        }
+
+        public void AddCarPathDataToList(CarPathData carPathData)
+        {
+            _carPathDataList.Add(carPathData);
+        }
+
+#endif
+
+        #endregion Editor Functions
     }
 }

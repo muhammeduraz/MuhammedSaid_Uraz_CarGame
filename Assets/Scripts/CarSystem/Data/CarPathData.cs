@@ -20,5 +20,20 @@ namespace Assets.Scripts.CarSystem.Data
         public Vector2 FinishPosition { get => _finishPosition; }
 
         #endregion Properties
+
+        #region Editor Functions
+
+#if UNITY_EDITOR
+
+        public void SetData(float startRotation, Vector2 startPosition, Vector2 finishPosition)
+        {
+            _startRotation = startRotation;
+            _startPosition = startPosition;
+            _finishPosition = finishPosition;
+        }
+
+#endif
+
+#endregion Editor Functions
     }
 }
