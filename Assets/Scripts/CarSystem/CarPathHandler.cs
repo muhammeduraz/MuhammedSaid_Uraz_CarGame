@@ -62,7 +62,8 @@ namespace Assets.Scripts.CarSystem
         {
             if (index < _iVDDataList.Count)
             {
-                return _iVDDataList[index];
+                IVDData data = new IVDData(_iVDDataList[index]);
+                return data;
             }
 
             return null;
@@ -83,6 +84,12 @@ namespace Assets.Scripts.CarSystem
         {
             this.value = value;
             this.duration = duration;
+        }
+
+        public IVDData(IVDData iVDData)
+        {
+            value = iVDData.value;
+            duration = iVDData.duration;
         }
     }
 }

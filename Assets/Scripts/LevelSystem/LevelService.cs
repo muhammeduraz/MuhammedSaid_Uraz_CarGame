@@ -30,7 +30,7 @@ namespace Assets.Scripts.LevelSystem
 
         #region Properties
 
-        public int LevelIndex 
+        public int LevelIndex
         { 
             get
             {

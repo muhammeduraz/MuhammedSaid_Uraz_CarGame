@@ -44,6 +44,8 @@ namespace Assets.Scripts.CarSystem.States
         public override void OnStateExit()
         {
             base.OnStateExit();
+
+            _currentIVDDataIndex = 0;
         }
 
         public void StartMovement()
