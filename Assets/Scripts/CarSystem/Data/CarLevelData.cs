@@ -9,9 +9,16 @@ namespace Assets.Scripts.CarSystem
     {
         #region Variables
 
+        [SerializeField] private GameObject _obstaclePrefab;
         [SerializeField] private List<CarPathData> _carPathDataList;
 
         #endregion Variables
+
+        #region Properties
+
+        public GameObject ObstaclePrefab { get => _obstaclePrefab; }
+
+        #endregion Properties
 
         #region Functions
 
@@ -44,6 +51,11 @@ namespace Assets.Scripts.CarSystem
         public void AddCarPathDataToList(CarPathData carPathData)
         {
             _carPathDataList.Add(carPathData);
+        }
+
+        public void SetObstaclePrefabData(GameObject prefab)
+        {
+            _obstaclePrefab = prefab;
         }
 
 #endif

@@ -143,11 +143,25 @@ namespace Assets.Scripts.LevelDesignSystem
             AssetDatabase.CreateAsset(carLevelData, Path.Combine(carPathDataPath, $"CarLevelData_{levelId}.asset"));
             _allCarLevelData.AddCarLevelData(carLevelData);
 
+            CreateObstaclePrefab(carLevelData);
+
             AssetDatabase.SaveAssets();
             EditorUtility.FocusProjectWindow();
 
             _currentDesignPathData = new DesignPathData();
             _designPathDataList.Clear();
+        }
+
+        private void CreateObstaclePrefab(CarLevelData carLevelData)
+        {
+            GameObject obstacleParent = new GameObject($"ObstacleParent_{levelId}");
+            FindObjectsOfType<BaseObstacle>().ToList().ForEach(obstacle => obstacle.transform.parent = obstacleParent.transform);
+            GameObject obstacleParentPrefab = PrefabUtility.SaveAsPrefabAsset(obstacleParent, Path.Combine(carPathDataPath, levelId, $"ObstacleParent_{levelId}.prefab"));
+
+            carLevelData.SetObstaclePrefabData(obstacleParentPrefab);
+
+            FindObjectsOfType<BaseObstacle>().ToList().ForEach(obstacle => obstacle.transform.parent = this.obstacleParent.transform);
+            DestroyImmediate(obstacleParent);
         }
 
         [Button(50)]

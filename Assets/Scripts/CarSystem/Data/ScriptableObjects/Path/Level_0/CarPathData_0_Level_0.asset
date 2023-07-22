@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CarPathData_0_Level_0
   m_EditorClassIdentifier: 
   _startRotation: -0
-  _startPosition: {x: -2.8, y: -6.7}
-  _finishPosition: {x: 2.8, y: 7}
+  _startPosition: {x: -2.44, y: -6.84}
+  _finishPosition: {x: 2.67, y: 6.74}
