@@ -7,25 +7,20 @@ namespace Assets.Scripts.CarSystem.States
     {
         #region Functions
 
-        public override void Initialize(CarHandler carHandler, CarStateHandler stateHandler)
-        {
-            base.Initialize(carHandler, stateHandler);
-        }
-
         public override void OnStateEnter()
         {
             base.OnStateEnter();
 
-            StopMovement();
+            SetPositionToStartPosition();
             stateHandler.ChangeCarState(typeof(IdleCarState));
         }
 
-        private void StopMovement()
+        public void SetPositionToStartPosition()
         {
-            carHandler.IsMovementActive = false;
+            carHandler.transform.position = carHandler.PathHandler.PathData.StartPosition;
 
-            carHandler.Rigidbody.velocity = Vector2.zero;
-            carHandler.Rigidbody.angularVelocity = 0f;
+            carHandler.CurrentRotation = carHandler.PathHandler.PathData.StartRotation;
+            carHandler.Rigidbody.rotation = carHandler.CurrentRotation;
         }
 
         #endregion Functions

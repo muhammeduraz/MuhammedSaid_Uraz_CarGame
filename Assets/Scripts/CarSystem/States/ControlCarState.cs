@@ -8,7 +8,7 @@ namespace Assets.Scripts.CarSystem.States
     {
         #region Variables
 
-
+        private float _currentInputValue;
 
         #endregion Variables
 
@@ -35,6 +35,9 @@ namespace Assets.Scripts.CarSystem.States
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
+
+            _currentInputValue = carHandler.GetInputValue();
+            carHandler.PathHandler.LogPathData(_currentInputValue);
 
             Move();
         }
@@ -68,7 +71,7 @@ namespace Assets.Scripts.CarSystem.States
 
         private void Move()
         {
-            carHandler.CurrentRotation += carHandler.GetInputValue() * carHandler.Settings.RotationSpeed * -10f * Time.deltaTime;
+            carHandler.CurrentRotation += _currentInputValue * carHandler.Settings.RotationSpeed * -10f * Time.deltaTime;
 
             carHandler.Rigidbody.velocity = carHandler.transform.up * carHandler.Settings.MovementSpeed;
             carHandler.Rigidbody.rotation = Mathf.Lerp(carHandler.Rigidbody.rotation, carHandler.CurrentRotation, carHandler.Settings.RotationLerpSpeed * Time.deltaTime);

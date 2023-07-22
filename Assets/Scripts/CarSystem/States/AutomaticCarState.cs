@@ -7,7 +7,9 @@ namespace Assets.Scripts.CarSystem.States
     {
         #region Variables
 
+        private int _currentIVDDataIndex;
 
+        private IVDData _currentIVDData;
 
         #endregion Variables
 
@@ -26,16 +28,59 @@ namespace Assets.Scripts.CarSystem.States
         public override void OnStateEnter()
         {
             base.OnStateEnter();
+
+            _currentIVDData = carHandler.PathHandler.GetIVDDataByIndex(_currentIVDDataIndex);
+            
+            StartMovement();
         }
 
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
+
+            MoveThroughPath();
         }
 
         public override void OnStateExit()
         {
             base.OnStateExit();
+        }
+
+        public void StartMovement()
+        {
+            carHandler.IsMovementActive = true;
+            carHandler.Rigidbody.simulated = true;
+        }
+
+        private void MoveThroughPath()
+        {
+            Debug.LogError("0");
+            if (_currentIVDData == null) return;
+            Debug.LogError("1");
+            _currentIVDData.duration -= Time.deltaTime;
+
+            carHandler.CurrentRotation += _currentIVDData.value * carHandler.Settings.RotationSpeed * -10f * Time.deltaTime;
+
+            carHandler.Rigidbody.velocity = carHandler.transform.up * carHandler.Settings.MovementSpeed;
+            carHandler.Rigidbody.rotation = Mathf.Lerp(carHandler.Rigidbody.rotation, carHandler.CurrentRotation, carHandler.Settings.RotationLerpSpeed * Time.deltaTime);
+
+        }
+
+        private void OnCurrentIVDDataDurationConsumed()
+        {
+            _currentIVDDataIndex++;
+            _currentIVDData = carHandler.PathHandler.GetIVDDataByIndex(_currentIVDDataIndex);
+
+            if (_currentIVDData == null)
+                stateHandler.ChangeCarState(typeof(IdleCarState));
+        }
+
+        private void CheckIfCurrentIVDDataDurationConsumed()
+        {
+            if (_currentIVDData == null || (_currentIVDData != null && _currentIVDData.duration < 0))
+            {
+                OnCurrentIVDDataDurationConsumed();
+            }
         }
 
         #endregion Functions

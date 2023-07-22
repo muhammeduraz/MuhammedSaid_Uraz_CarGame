@@ -80,7 +80,7 @@ namespace Assets.Scripts.CarSystem
             if (!IsOutOfCars())
             {
                 SpawnCar();
-                ResetCarPositions();
+                ResetCars();
 
                 TapToPlayButtonAppearRequested?.Invoke();
             }
@@ -110,7 +110,7 @@ namespace Assets.Scripts.CarSystem
         public void OnCarHitAnObstacle()
         {
             StopCarMovements();
-            ResetCarPositions();
+            ResetCars();
 
             TapToPlayButtonAppearRequested?.Invoke();
         }
@@ -121,7 +121,7 @@ namespace Assets.Scripts.CarSystem
             _currentCarHandler.SetPathData(_carLevelData.GetCarPathDataByIndex(_currentCarIndex));
             _currentCarHandler.Initialize();
 
-            FinishPositionUpdated?.Invoke(_currentCarHandler.PathData.FinishPosition);
+            FinishPositionUpdated?.Invoke(_currentCarHandler.PathHandler.PathData.FinishPosition);
 
             SubscribeToCar(true);
         }
@@ -168,14 +168,14 @@ namespace Assets.Scripts.CarSystem
 
                 if (_cachedCarHandler != null)
                 {
-                    _cachedCarHandler.StateHandler.ChangeCarState(typeof(ResetCarState));
+                    _cachedCarHandler.StateHandler.ChangeCarState(typeof(IdleCarState));
                 }
             }
 
-            _currentCarHandler.StateHandler.ChangeCarState(typeof(ResetCarState));
+            _currentCarHandler.StateHandler.ChangeCarState(typeof(IdleCarState));
         }
 
-        public void ResetCarPositions()
+        public void ResetCars()
         {
             for (int i = 0; i < _playedCarList.Count; i++)
             {
@@ -183,11 +183,11 @@ namespace Assets.Scripts.CarSystem
 
                 if (_cachedCarHandler != null)
                 {
-                    _cachedCarHandler.SetPositionToStartPosition();
+                    _cachedCarHandler.StateHandler.ChangeCarState(typeof(ResetCarState));
                 }
             }
 
-            _currentCarHandler.SetPositionToStartPosition();
+            _currentCarHandler.StateHandler.ChangeCarState(typeof(ResetCarState));
         }
 
         #endregion Functions

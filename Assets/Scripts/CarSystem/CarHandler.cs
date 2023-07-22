@@ -26,7 +26,7 @@ namespace Assets.Scripts.CarSystem
 
         private float _currentRotation;
 
-        private CarPathData _pathData;
+        private CarPathHandler _pathHandler;
         private CarStateHandler _stateHandler;
 
         [SerializeField] private CarSettings _settings;
@@ -41,9 +41,9 @@ namespace Assets.Scripts.CarSystem
         public bool IsMovementActive { get => _isMovementActive; set { _isMovementActive = value; enabled = value; } }
         public float CurrentRotation { get => _currentRotation; set => _currentRotation = value; }
         
-        public CarPathData PathData { get => _pathData; }
         public CarSettings Settings { get => _settings; }
         public Rigidbody2D Rigidbody { get => _rigidbody; }
+        public CarPathHandler PathHandler { get => _pathHandler; }
         public CarStateHandler StateHandler { get => _stateHandler; }
 
         #endregion Properties
@@ -69,15 +69,13 @@ namespace Assets.Scripts.CarSystem
             _stateHandler = new CarStateHandler(this, _carStateList);
             _stateHandler.Initialize();
             _stateHandler.ChangeCarState(typeof(IdleCarState));
-
-            SetPositionToStartPosition();
         }
 
         public void Dispose()
         {
             _settings = null;
-            _pathData = null;
             _rigidbody = null;
+            _pathHandler = null;
 
             _stateHandler.Dispose();
             _stateHandler = null;
@@ -85,21 +83,13 @@ namespace Assets.Scripts.CarSystem
 
         public void SetPathData(CarPathData pathData)
         {
-            _pathData = pathData;
+            _pathHandler = new CarPathHandler(pathData);
         }
 
         public void OnPathCompleted()
         {
             _stateHandler.ChangeCarState(typeof(ResetCarState));
             _isPathCompleted = true;
-        }
-
-        public void SetPositionToStartPosition()
-        {
-            transform.position = _pathData.StartPosition;
-
-            _currentRotation = _pathData.StartRotation;
-            _rigidbody.rotation = _currentRotation;
         }
 
         #endregion Functions
