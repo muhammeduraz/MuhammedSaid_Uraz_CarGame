@@ -29,6 +29,7 @@ namespace Assets.Scripts.CarSystem.States
         {
             base.OnStateEnter();
 
+            carHandler.isCurrentCar = false;
             _currentIVDData = carHandler.PathHandler.GetIVDDataByIndex(_currentIVDDataIndex);
             
             StartMovement();

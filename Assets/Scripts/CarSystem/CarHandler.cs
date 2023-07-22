@@ -7,7 +7,7 @@ using Assets.Scripts.CarSystem.States;
 
 namespace Assets.Scripts.CarSystem
 {
-    public class CarHandler : MonoBehaviour, IInitializable, IDisposable
+    public class CarHandler : MonoBehaviour, IInitializable, IDisposable, ITriggerable
     {
         #region Events
 
@@ -20,6 +20,8 @@ namespace Assets.Scripts.CarSystem
         #endregion Events
 
         #region Variables
+
+        public bool isCurrentCar; 
 
         private bool _isPathCompleted;
         private bool _isMovementActive;
@@ -90,6 +92,13 @@ namespace Assets.Scripts.CarSystem
         {
             _stateHandler.ChangeCarState(typeof(ResetCarState));
             _isPathCompleted = true;
+        }
+
+        public void OnTriggered(CarHandler carHandler)
+        {
+            if (isCurrentCar) return;
+
+            carHandler.CarHitAnObstacle?.Invoke();
         }
 
         #endregion Functions

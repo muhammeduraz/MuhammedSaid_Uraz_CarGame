@@ -28,6 +28,8 @@ namespace Assets.Scripts.CarSystem.States
         {
             base.OnStateEnter();
 
+            carHandler.isCurrentCar = true;
+
             SubscribeToInput(true);
             StartMovement();
         }
